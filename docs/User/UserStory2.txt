@@ -1,0 +1,8 @@
+Group 21: 
+
+User Story 2:
+A user wants a Tesla. They type in “Tesla” into the search bar. 
+The website finds no listings of a Tesla being sold online anywhere, 
+so it tells the user that the item either does not exist on the market, 
+or that they may have typed the item incorrectly. 
+(Unfortunately, finding a Tesla online to purchase is quite difficult.) 
