@@ -1,0 +1,12 @@
+Group 21: 
+
+User Story 4:
+A User wants a newly released super rare trading card. 
+They type the name of the trading card into the search bar for listings, 
+but to their disappointment, the price of the card is very high (maybe because of scalpers or because of hyped up prices). 
+Wanting to be notified when a more fair price for the card is listed, they choose to “watch” for the name of the trading card, 
+but it prompts them to sign up for an account before they can do so. 
+For some reason, they do want to use a Google or Facebook Account, 
+so they opt to sign up using the website instead, putting in their Username, Password, Email, etc. 
+Now, when the “watched” item has a new listing, the User will be e-mailed for it. 
+They can decide which listings are emailed to them, such as wanting only listings that are within a specific price range to be emailed.
