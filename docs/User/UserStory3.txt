@@ -1,0 +1,10 @@
+Group 21:
+
+User Story 3: 
+Users want a new iPhone 12, but they want to further customize search. 
+They put “iPhone 12” into the search bar, 
+to which the website will give them the typical listings from cheapest to most expensive. 
+This is not enough for User, so they use a set of filters and options on the side. 
+They choose “Sort by Retailer”, giving them a list of only the iPhone 12s being sold by places like Apple, BestBuy, etc. 
+They then choose “Price Range” and input in two prices to get a more enclosed number of listings. 
+Finally, they select an “Estimate Delivery Time Range” to see which retailers deliver to them the fastest.
