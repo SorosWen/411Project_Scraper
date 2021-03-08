@@ -1,6 +1,0 @@
-Group 21
-Mingjun Wen, Harry Yuan, Hyun Oh Jeon, Junyu Liu, Meng-Hsin Cheng
-
-Idea 1
-Story 1:
-A user wants a Playstation 5 at the cheapest price. They log into our website using their Google Account, then type in “Playstation 5” into the search bar. The website gives them a listing of retailers and sellers. By default, the list is ordered by cheapest to most expensive. When a user clicks on one of the listings, it will redirect them to the corresponding website. 
