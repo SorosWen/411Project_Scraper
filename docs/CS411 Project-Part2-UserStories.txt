@@ -1,0 +1,229 @@
+﻿Idea 1: A web page that allows users to type in items they want to purchase through a search bar. This site will then grab related product data from retailers/e-commerce (e.g. Walmart, Ebay, BestBuy, Amazon) and list them side by side for users to compare. The user can also filter out undesired items by setting a price range, estimated delivery time, etc.
+
+
+Common Use Case [Story 1]
+User Case 1
+	User wants a Playstation 5
+	Actor
+	User
+	User Case Overview
+	A user wants a Playstation 5 at the cheapest price. They log into the website using their Google Account, then type in “Playstation 5” into the search bar. The website gives them a listing of retailers and sellers. By default, the list is ordered by cheapest to most expensive. When a user clicks on one of the listings, it will redirect them to the corresponding website. 
+	Subject Area
+	Electronics
+	Actors
+	The user
+	Trigger
+	“Playstation 5” is typed in the search bar
+	Pre Condition 1
+	User wants a PS5
+	Pre Condition 2
+	Listings for “Playstation 5” exist
+	
+
+Basic Flow [Story 1]
+Description
+	This scenario describes the situation where a result is found.
+	Step 1
+	User types in “Playstation 5” in search bar
+	Step 2
+	Results are found. There are several listings of a Playstation 5 from retailers and sellers, from least to most expensive by default.
+	Step 3
+	User decides to purchase a Playstation 5 from the listing that is cheapest. 
+	Termination Outcome
+	User is redirected to that listing’s web page.
+	
+
+No Result Found Use Case [Story 2]
+User Case 2
+	User wants a Tesla
+	Actor
+	User
+	User Case Overview
+	A user wants a Tesla. They type in “Tesla” into the search bar. The website finds no listings of a Tesla being sold online anywhere, so it tells the user that the item either does not exist on the market, or that they may have typed the item incorrectly. (Unfortunately, finding a Tesla online to purchase is quite difficult.) 
+	Subject Area
+	Electronics
+	Actors
+	The user
+	Trigger
+	“Tesla” is typed in the search bar
+	Pre Condition 1
+	The user wants a Tesla
+	Pre Condition 2
+	This product is not for sale online. 
+	
+
+Basic Flow [Story 2]
+Description
+	This scenario describes the situation where there is no result found.
+	Step 1
+	The user types “Tesla” into the search bar. 
+	Step 2
+	The websites searched “Tesla” through APIs but found no such listings.  
+	Termination Outcome
+	The website tells the user that there are no listings for the product, and that it either does not exist, or the user may have typed in the name incorrectly.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Additional Filters Use Case [Story 3]
+User Case 3
+	User wants a new iPhone 12
+	Actor 
+	User
+	User Case Overview
+	Users want a new iPhone 12, but they want to further customize search. They put “iPhone 12” into the search bar. They choose “Sort by Retailer”, giving them a list of only the iPhone 12s being sold by places like Apple, BestBuy, etc. They then choose “Price Range” and input in two prices to get a more enclosed number of listings. Finally, they select an “Estimate Delivery Time Range” to see which retailers deliver to them the fastest.
+	Subject Area
+	Electronics
+	Actors
+	User
+	Trigger
+	User put “iPhone 12” into the search bar
+	Precondition 1
+	User wants an iPhone 12
+	Precondition 2
+	User has a price range in mind
+	
+
+Basic Flow [Story 3]
+Description
+	The scenario describes when the user has a specific price range in mind.
+	1
+	User put “iPhone 12” into the search bar
+	2
+	User chooses “Sort by Retailer”. This allows them to filter out iPhones being sold only by retailers like BestBuy.
+	3
+	User chooses “Price Range” and input two prices. They are given a filtered listing of iPhones within their desired range.
+	4
+	User selects “Estimate Delivery Time Range”, hoping to find a retailer that can deliver an iPhone in the next 5 business days.
+	Termination Outcome
+	User finds which retailer can deliver the product fastest in the given price range.
+	
+
+Alternative Flow A [Story 3]
+Description
+	The scenario describes when the item searched for is not in user’s price range
+	1
+	User searches for “iPhone 12”
+	2
+	User enters a price range between 100 dollar and 200 dollars
+	3
+	The website cannot find any sites selling iPhone 12 in the given range
+	Termination Outcome
+	User is prompted by website with “Item not available in given price range”
+	
+
+Alternative Flow B [Story 3]
+Description
+	The scenario describes when the item searched cannot be delivered in the user’s desired estimated delivery time.
+	1
+	User searches for “iPhone 12”.
+	2
+	User enters a price range between 700-900 dollars. They find a few listings.
+	3
+	User wants the iPhone delivered in 5 business days. No retailer or independent seller is able to do so.
+	Termination Outcome
+	User is prompted by website with “Item not available in given estimated delivery time”
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Watch Item Use Case [Story 3]
+User Case 4
+	User wants a rare trading card
+	Actor
+	User
+	User Case Overview
+	A User wants a newly released super rare trading card. They type the name of the trading card into the search bar for listings, but to their disappointment, the price of the card is very high. Wanting to be notified when a more fair price for the card is listed, they choose to “watch” for the name of the trading card, but it prompts them to sign up for an account before they can do so. For some reason, they do want to use a Google or Facebook Account, so they opt to sign up using the website instead, putting in their Username, Password, Email, etc. Now, when the “watched” item has a new listing, the User will be e-mailed for it. They can decide which listings are emailed to them, such as wanting only listings that are within a specific price range to be emailed.
+	Subject Area
+	Trading card
+	Actors
+	User 
+	Trigger
+	User types in and search newly released super rare trading cards users wants
+	Pre Condition 1
+	User has in mind a rare card he/she wants to buy
+	Pre Condition 2
+	User has expected range of price for the rare card
+	
+
+Basic Flow [Story 4]
+Description
+	This scenario describes the User wishing to be notified of when a listing of the item has appeared with their desired price range.
+	1
+	The uses puts in name of newly released super rare trading cards in search
+	2
+	Item is in stock 
+	3
+	User mark the item as “watch” for more listing later on
+	4
+	User has to login to either FB or Google
+	5
+	User puts in specific price range to be notified
+	Termination Outcome
+	User later gets notification of item in price range he has setted up
+	
+
+Alternative Flow 4A
+Description
+	This scenario describes the User using Facebook.Google to create an account to get emails.
+	1
+	User decides to login using FB
+	2
+	leads to FP/Google page, allowing the user to use them to create an account.
+	3
+	User puts in specific price range to be notified
+	Termination Outcome
+	User use FB/Google accounts to get notified when the item in the price range has been listed.
+	
+
+Alternative Flow 4B
+Description
+	This scenario describes the User not having either FB or Google, and opting to create an account using the website instead.
+	1
+	User does not have FB or Google, so they choose that they want to make an account using the website itself.
+	2
+	They are prompted to create an account using their e-mail and setting a password.
+	3
+	User puts in specific price range to be notified
+	Termination Outcome
+	User uses a website account to get notified when the item in the price range has been listed.
