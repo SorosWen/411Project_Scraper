@@ -1,0 +1,16 @@
+<h1> {{message}} </h1>
+
+<form action="/products/" method="POST">
+    {% csrf_token %}
+    <label for="product_name">Please enter a product name: </label>
+    <input type="text" id = "product_name" name="product_name" required>
+
+    <button type="submit" value="Submit">Search</button>
+</form>
+
+{% if search_result %} 
+<body>
+    {% for product in search_result %}
+    {% endfor %}
+</body>
+{% endif %}
