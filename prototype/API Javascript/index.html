@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Your Search Results for ${Search_String}</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Top 10 Search Results for ${Search_String}</h1>
+  <p id="demo"></p>
+    <script>
+    var queryString = 'iphone12'
+
+    var staticURL = 'http://api.serpstack.com/search?access_key=540a75178a80616c693cbade72c360e8&query='+ queryString + ' price=google&location=newyork&google_domain=google.com'
+
+    $.getJSON(staticURL, function(data) {
+        console.log(data);
+        for (i = 0; i < 3; i++) {
+        document.getElementById("demo").innerHTML += data.organic_results[i].title + data.organic_results[i].url + data.organic_results[i].snnipet;
+        myElement.appendChild( document.createTextNode( '\u00A0' ) );
+        }
+    });
+    
+    </script>
+
+</body>
+</html>
