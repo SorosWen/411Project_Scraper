@@ -1,4 +1,4 @@
-<h1> {{message}} </h1>
+<h1> Product Search Page </h1>
 
 <form action="/products/" method="POST">
     {% csrf_token %}
@@ -8,9 +8,28 @@
     <button type="submit" value="Submit">Search</button>
 </form>
 
-{% if search_result %} 
+{% if product_name %} 
 <body>
-    {% for product in search_result %}
-    {% endfor %}
-</body>
+    <h1>Top 3 Search Results for {{ product_name }}</h1>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <p id="demo"></p>
+      <script>
+      
+      // change queryString to whatever search term the user enters
+      var queryString = '{{ product_name }}'
+  
+      var staticURL = 'http://api.serpstack.com/search?access_key=540a75178a80616c693cbade72c360e8&query='+
+          queryString + ' price=google&location=newyork&google_domain=google.com'
+      
+      // get the JSON and loop through the search results and display the first 3
+      $.getJSON(staticURL, function(data) {
+          console.log(data);
+          for (i = 0; i < 3; i++) {
+          document.getElementById("demo").innerHTML += data.organic_results[i].title + data.organic_results[i].url + data.organic_results[i].snnipet;
+          }
+      });
+      
+      </script>
+  
+  </body>
 {% endif %}

@@ -17,10 +17,10 @@
     
     // get the JSON and loop through the search results and display the first 3
     $.getJSON(staticURL, function(data) {
-        console.log(data);
-        for (i = 0; i < 3; i++) {
+      console.log(data);
+      for (i = 0; i < 3; i++) {
         document.getElementById("demo").innerHTML += data.organic_results[i].title + data.organic_results[i].url + data.organic_results[i].snnipet;
-        }
+      }
     });
     
     </script>
