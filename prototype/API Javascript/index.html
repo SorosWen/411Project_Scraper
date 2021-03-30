@@ -2,35 +2,35 @@
 <html>
 <head>
 
-  <title>Your Search Results for ${Search_String}</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Your Search Results for ${Search_String}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
 <body>
-  <h1>Top 3 Search Results for ${Search_String}</h1>
-  <div id ='updateDiv'></div>
-  <p id="demo"></p>
+    <h1>Top 3 Search Results for ${Search_String}</h1>
+    <div id ='updateDiv'></div>
+    <p id="demo"></p>
     <script>
-    
-    // change queryString to whatever search term the user enters 
-    var queryString = 'iphone12 Amazon'
+      
+      // change queryString to whatever search term the user enters 
+      var queryString = 'iphone12 Amazon'
+      var staticURL = 'http://api.serpstack.com/search?access_key=540a75178a80616c693cbade72c360e8&query='+ queryString + ' price=google&location=newyork&google_domain=google.com'
+      var newParagraph;
+      $.getJSON(staticURL, function(data) {
+          console.log(data);
+          for (i = 0; i < 3; i++) {
+          var k = i + 1;
+          newParagraph = document.createElement('p');
+          newParagraph.textContent = k.toString() + ". " + data.organic_results[i].title;
+          document.getElementById("updateDiv").appendChild(newParagraph);
 
-    var staticURL = 'http://api.serpstack.com/search?access_key=540a75178a80616c693cbade72c360e8&query='+ queryString + ' price=google&location=newyork&google_domain=google.com'
-    var newParagraph;
-    $.getJSON(staticURL, function(data) {
-        console.log(data);
-        for (i = 0; i < 3; i++) {
-        var k = i + 1;
-        newParagraph = document.createElement('p');
-        newParagraph.textContent = k.toString() + ". " + data.organic_results[i].title;
-        document.getElementById("updateDiv").appendChild(newParagraph);
+          newParagraph = document.createElement('p');
+          newParagraph.textContent = " " + data.organic_results[i].url;
+          document.getElementById("updateDiv").appendChild(newParagraph);
 
-        newParagraph = document.createElement('p');
-        newParagraph.textContent = " " + data.organic_results[i].url;
-        document.getElementById("updateDiv").appendChild(newParagraph);
-
-        //document.getElementById("demo").innerHTML += data.organic_results[i].title + data.organic_results[i].url + data.organic_results[i].snnipet;
-        }
-    });
+          //document.getElementById("demo").innerHTML += data.organic_results[i].title + data.organic_results[i].url + data.organic_results[i].snnipet;
+          }
+      });
     
     </script>
 
