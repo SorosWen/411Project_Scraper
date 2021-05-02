@@ -2,14 +2,18 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+
+
+def search_product(request):
+    if request.method == 'POST':
+        product_name = request.POST['product_name']
+        return render(request, 'products/fetch_info.html', {'product_name': product_name})
+    else:
+        return render(request, 'products/fetch_info.html')
+
+
 """
-amazon_getPrice(url)
-Input: an url of a Amazon product page. 
-Funtion: Retrieve product name and price from the iput url. 
-Return value: a list with two strings: [product_name, price] 
-"""
-"""
-amazon_getPrice(url)
+amazon_getInfo(url)
 Input: an url of a Amazon product page. 
 Funtion: Retrieve product name and price from the iput url. 
 Return value: a list with two strings: [product_name, price] 
@@ -40,11 +44,3 @@ def amazon_getInfo(url):
     product = [product_name, product_price, product_rating]
     print(product)
     return product
-
-
-def search_product(request):
-    if request.method == 'POST':
-        product_name = request.POST['product_name']
-        return render(request, 'products/fetch_info.html', {'product_name': product_name})
-    else:
-        return render(request, 'products/fetch_info.html')
