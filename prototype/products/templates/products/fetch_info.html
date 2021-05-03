@@ -19,13 +19,15 @@
         // change queryString to whatever search term the user enters
         var queryString = '{{ product_name }}'
         var googleSearchAPIKey = '540a75178a80616c693cbade72c360e8'
+
         var ebaySearchAPIKey = '71F4D87D51294D71B6A9E61373597E61'
+        var ebayReviewID = ''
     
         var googleStaticURL = 'http://api.serpstack.com/search?access_key=' + googleSearchAPIKey + '&query='+
             queryString + ' price=google&location=newyork&google_domain=google.com'
         
         var ebayStaticURL = 'https://api.countdownapi.com/request?api_key=' + ebaySearchAPIKey +
-            '&type=search&ebay_domain=ebay.com&search_term=' + queryString
+            '&type=search&ebay_domain=ebay.com&search_term=' + queryString + '&num=25'
 
 
         // get the JSON and loop through the search results and display the first 3
@@ -42,21 +44,48 @@
                 document.getElementById("updateDiv").appendChild(newParagraph);
             }
         });
-        
-        $.getJSON(ebayStaticURL, function(data) {
-            console.log(data);
-            for (i = 0; i < 3; i++) {
-                var k = i + 1;
-                newParagraph = document.createElement('p');
-                newParagraph.textContent = k.toString() + ". " + data.search_results[i].title;
-                document.getElementById("updateDiv").appendChild(newParagraph);
 
-                newParagraph = document.createElement('p');
-                newParagraph.textContent = " " + data.search_results[i].link;
-                document.getElementById("updateDiv").appendChild(newParagraph);
-            }
+        // perform two consecutive API searches
+        function ebayResultandReviews(){
+            // get the ebay results first
+            $.getJSON(ebayStaticURL, function(data) {
+                ebayReviewID = data.search_results[0].epid;
+                console.log(data);
+                for (i = 0; i < 3; i++) {
+                    var k = i + 1;
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = k.toString() + ". " + data.search_results[i].title;
+                    document.getElementById("updateDiv").appendChild(newParagraph);
 
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = " " + data.search_results[i].link;
+                    document.getElementById("updateDiv").appendChild(newParagraph);
+                }
+            }).done(function () {
+                // wait till results and item id is back and do search on reviews
+                var ebayReviewURL = 'https://api.countdownapi.com/request?api_key=' + ebaySearchAPIKey + 
+                '&type=reviews&ebay_domain=ebay.com&epid=' + ebayReviewID + '&condition=all'
+            
+                $.getJSON(ebayReviewURL, function(data) {
+                    console.log(data);
+                    newParagraph = document.createElement('h2');
+                    newParagraph.textContent = "Reviews"
+
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = " " + data.top_favourable.title;
+                    document.getElementById("updateDiv").appendChild(newParagraph);
+
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = " " + data.top_favourable.body;
+                    document.getElementById("updateDiv").appendChild(newParagraph);
+                    
+                });
+            }); 
+        }
+        $(document).ready(function() {
+            ebayResultandReviews();
         });
+
         
         </script>
   
