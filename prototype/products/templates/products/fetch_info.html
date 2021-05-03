@@ -94,8 +94,13 @@
                     div.appendChild(newParagraph);
 
                     newParagraph = document.createElement('p');
-                    newParagraph.textContent = " " + data.search_results[i].link;
+                    newParagraph.textContent = "Price: " + data.search_results[i].price.raw;
                     div.appendChild(newParagraph);
+
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = data.search_results[i].link;
+                    div.appendChild(newParagraph);
+
                 }
             }).done(function () {
                 // wait till results and item id is back and do search on reviews
