@@ -10,7 +10,7 @@
 
 {% if product_name %} 
 <body>
-    <h1>Top 3 Search Results for {{ product_name }}</h1>
+    <h1>Top 6 Search Results for {{ product_name }}</h1>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div id ='updateDiv'></div>
     <p id="demo"></p>
@@ -30,36 +30,51 @@
             '&type=search&ebay_domain=ebay.com&search_term=' + queryString + '&num=25'
 
 
-        // get the JSON and loop through the search results and display the first 3
-        $.getJSON(googleStaticURL, function(data) {
+        // perform two consecutive API searches
+        function ebayResultandReviews(){
+            
+            $.getJSON(googleStaticURL, function(data) {
             console.log(data);
+            let div = document.createElement('div');
+            div.id = 'googleResults';
+            document.body.appendChild(div);
+            let h4 = document.createElement('h4');
+            h4.textContent = 'What we found on Google:';
+
+            div.appendChild(h4);
             for (i = 0; i < 3; i++) {
                 var k = i + 1;
                 newParagraph = document.createElement('p');
                 newParagraph.textContent = k.toString() + ". " + data.organic_results[i].title;
-                document.getElementById("updateDiv").appendChild(newParagraph);
+                div.appendChild(newParagraph);
 
                 newParagraph = document.createElement('p');
                 newParagraph.textContent = " " + data.organic_results[i].url;
-                document.getElementById("updateDiv").appendChild(newParagraph);
+                div.appendChild(newParagraph);
             }
         });
-
-        // perform two consecutive API searches
-        function ebayResultandReviews(){
+        
             // get the ebay results first
             $.getJSON(ebayStaticURL, function(data) {
                 ebayReviewID = data.search_results[0].epid;
                 console.log(data);
+                
+                let div = document.createElement('div');
+                div.id = 'ebayResults';
+                document.body.appendChild(div);
+                let h4 = document.createElement('h4');
+                h4.textContent = 'What we found on eBay:';
+                div.appendChild(h4);
+                
                 for (i = 0; i < 3; i++) {
                     var k = i + 1;
                     newParagraph = document.createElement('p');
                     newParagraph.textContent = k.toString() + ". " + data.search_results[i].title;
-                    document.getElementById("updateDiv").appendChild(newParagraph);
+                    div.appendChild(newParagraph);
 
                     newParagraph = document.createElement('p');
                     newParagraph.textContent = " " + data.search_results[i].link;
-                    document.getElementById("updateDiv").appendChild(newParagraph);
+                    div.appendChild(newParagraph);
                 }
             }).done(function () {
                 // wait till results and item id is back and do search on reviews
@@ -68,16 +83,39 @@
             
                 $.getJSON(ebayReviewURL, function(data) {
                     console.log(data);
-                    newParagraph = document.createElement('h2');
-                    newParagraph.textContent = "Reviews"
+                    let div = document.createElement('div');
+                    div.id = 'reviews';
+                    document.body.appendChild(div);
+
+                    // header
+                    let h2 = document.createElement('h2');
+                    h2.textContent = 'Reviews on ' + queryString + ': ' + + " Average Ratings: " + data.summary.rating;
+                    div.appendChild(h2);
+                    
+
+                    // title + ratings
+                    let h3 = document.createElement('h4');
+                    h3.textContent = data.top_favourable.title;
+                    div.appendChild(h3);
 
                     newParagraph = document.createElement('p');
-                    newParagraph.textContent = " " + data.top_favourable.title;
-                    document.getElementById("updateDiv").appendChild(newParagraph);
+                    newParagraph.textContent = data.top_favourable.body;
+                    div.appendChild(newParagraph);
 
+                    newParagraph = document.createElement('h5');
+                    newParagraph.textContent = "    - Item reviewed by " + data.top_favourable.profile.name;
+                    div.appendChild(newParagraph);
+
+                    // Second Reviewer
+                    let review1 = document.createElement('h4');
+                    review1.textContent = data.reviews[1].title + " User Rating: " + data.reviews[1].rating;
+                    div.appendChild(review1);
                     newParagraph = document.createElement('p');
-                    newParagraph.textContent = " " + data.top_favourable.body;
-                    document.getElementById("updateDiv").appendChild(newParagraph);
+                    newParagraph.textContent = data.reviews[1].body;
+                    div.appendChild(newParagraph);
+                    newParagraph = document.createElement('h5');
+                    newParagraph.textContent = "    - Item reviewed by " + data.reviews[1].profile.name;
+                    div.appendChild(newParagraph);
                     
                 });
             }); 
