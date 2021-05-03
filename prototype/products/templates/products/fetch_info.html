@@ -1,4 +1,9 @@
+{% load static %}
+
 <h1> Product Search Page </h1>
+<head>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
 
 <form action="/products/" method="POST">
     {% csrf_token %}
@@ -29,7 +34,23 @@
         var ebayStaticURL = 'https://api.countdownapi.com/request?api_key=' + ebaySearchAPIKey +
             '&type=search&ebay_domain=ebay.com&search_term=' + queryString + '&num=25'
 
+        let left = document.createElement('div');
+        left.className = 'split left';
+        document.body.appendChild(left);
 
+        let leftcenter = document.createElement('div');
+        leftcenter.className = 'centered';
+        left.appendChild(leftcenter);
+
+        let right = document.createElement('div');
+        right.className = 'split right';
+        document.body.appendChild(right);
+
+        let rightcenter = document.createElement('div');
+        rightcenter.className = 'centered';
+        right.appendChild(rightcenter);
+
+        
         // perform two consecutive API searches
         function ebayResultandReviews(){
             
@@ -37,7 +58,7 @@
             console.log(data);
             let div = document.createElement('div');
             div.id = 'googleResults';
-            document.body.appendChild(div);
+            leftcenter.appendChild(div);
             let h4 = document.createElement('h4');
             h4.textContent = 'What we found on Google:';
 
@@ -61,7 +82,7 @@
                 
                 let div = document.createElement('div');
                 div.id = 'ebayResults';
-                document.body.appendChild(div);
+                leftcenter.appendChild(div);
                 let h4 = document.createElement('h4');
                 h4.textContent = 'What we found on eBay:';
                 div.appendChild(h4);
@@ -85,11 +106,11 @@
                     console.log(data);
                     let div = document.createElement('div');
                     div.id = 'reviews';
-                    document.body.appendChild(div);
+                    rightcenter.appendChild(div);
 
                     // header
                     let h2 = document.createElement('h2');
-                    h2.textContent = 'Reviews on ' + queryString + ': ' + + " Average Ratings: " + data.summary.rating;
+                    h2.textContent = 'Reviews on ' + queryString + ': ' + " Average Ratings: " + data.summary.rating;
                     div.appendChild(h2);
                     
 
@@ -116,9 +137,21 @@
                     newParagraph = document.createElement('h5');
                     newParagraph.textContent = "    - Item reviewed by " + data.reviews[1].profile.name;
                     div.appendChild(newParagraph);
+
+                    // Third Reviewer
+                    let review2 = document.createElement('h4');
+                    review2.textContent = data.reviews[2].title + " User Rating: " + data.reviews[2].rating;
+                    div.appendChild(review2);
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = data.reviews[2].body;
+                    div.appendChild(newParagraph);
+                    newParagraph = document.createElement('h5');
+                    newParagraph.textContent = "    - Item reviewed by " + data.reviews[2].profile.name;
+                    div.appendChild(newParagraph);
                     
                 });
             }); 
+            
         }
         $(document).ready(function() {
             ebayResultandReviews();
