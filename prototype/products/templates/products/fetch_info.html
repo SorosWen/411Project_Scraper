@@ -44,6 +44,7 @@
     <button type="submit" value="Submit">Search</button>
 </form>
 
+
 {% if product_name %} 
 <body>
     <h1>Top 6 Search Results for {{ product_name }}</h1>
@@ -56,7 +57,7 @@
         var queryString = '{{ product_name }}'
         var googleSearchAPIKey = '540a75178a80616c693cbade72c360e8'
 
-        var ebaySearchAPIKey = '71F4D87D51294D71B6A9E61373597E61'
+        var ebaySearchAPIKey = '59E8F264F6D84373B5FD933CA7CFDF5D'
         var ebayReviewID = ''
     
         var googleStaticURL = 'http://api.serpstack.com/search?access_key=' + googleSearchAPIKey + '&query='+
