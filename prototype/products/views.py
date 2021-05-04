@@ -14,7 +14,6 @@ def search_product(request):
     if request.method == 'POST':
         product_name = request.POST['product_name']
         product_list = amazon_getSearchResult(product_name)
-        print(product_list)
         return render(request, 'products/fetch_info.html', {'product_name': product_name, 'product_list': product_list})
     else:
         return render(request, 'products/fetch_info.html')
@@ -39,10 +38,13 @@ def amazon_getSearchResult(product_name):
     soup = BeautifulSoup(webpage.content, "lxml")
     links = soup.find_all("a", attrs={'class':'a-link-normal s-no-outline'})
     product_list = []
+    count = 10
     for link in links: 
         link = "https://www.amazon.com" + link.get('href')
         product_list.append(amazon_product(link))
-        break
+        count -= 1
+        if count <= 0:
+            break
     return product_list
 
 
