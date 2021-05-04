@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 import requests
 
