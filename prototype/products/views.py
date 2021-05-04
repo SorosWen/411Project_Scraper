@@ -1,46 +1,83 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from requests_html import HTMLSession
+from bs4 import BeautifulSoup
+import requests
 
+HEADERS = ({'User-Agent':
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
+            'Accept-Language': 'en-US, en;q=0.5'})
 
 
 def search_product(request):
     if request.method == 'POST':
         product_name = request.POST['product_name']
-        return render(request, 'products/fetch_info.html', {'product_name': product_name})
+        product_list = amazon_getSearchResult(product_name)
+        print(product_list)
+        return render(request, 'products/fetch_info.html', {'product_name': product_name, 'product_list': product_list})
     else:
         return render(request, 'products/fetch_info.html')
 
 
+############################################################################
+############################################################################
+############################################################################
 """
-amazon_getInfo(url)
-Input: an url of a Amazon product page. 
-Funtion: Retrieve product name and price from the iput url. 
-Return value: a list with two strings: [product_name, price] 
+amazon_getSearchResult(product_name)
+Input: the product name in string. 
+Output: a list of product information, each element is the info of a product. 
 """
-def amazon_getInfo(url):
-    s = HTMLSession()
-    r = s.get(url)
-    r.html.render(sleep=1)
+def amazon_getSearchResult(product_name):
+    url = 'https://www.amazon.com/s?k=' + product_name.replace(' ', '+')
+    webpage = requests.get(url, headers = HEADERS)
+    soup = BeautifulSoup(webpage.content, "lxml")
+    links = soup.find_all("a", attrs={'class':'a-link-normal s-no-outline'})
+    product_list = []
+    for link in links: 
+        link = "https://www.amazon.com" + link.get('href')
+        product_list.append(amazon_product(link))
+        break
+    return product_list
 
-    # product name
-    try: 
-        product_name = r.html.xpath('//*[@id="productTitle"]', first=True).text
-    except: 
-        product_name = 'No name for display'
-    
-    # product price
-    try: 
-        product_price = r.html.xpath('//*[@id="priceblock_ourprice"]', first=True).text
-    except: 
-        product_price = 'No Price for display.'
 
-    # product rating
-    try: 
-        product_rating = r.html.xpath('//*[@id="acrCustomerReviewText"]', first=True).text.replace(' ratings', '')
-    except: 
-        product_rating = 'Rating is not available.'
+"""
+amazon_product(url)
+Input: the url of the Amazon product page. 
+Output: a list of information about this product. [title, price, rating]
+"""
+def amazon_product(url):
+    webpage = requests.get(url, headers=HEADERS)
+    soup = BeautifulSoup(webpage.content, "lxml")
+    title = soup.find("span", attrs={"id":'productTitle'}).text.replace('\n', '').replace('\'', '')
+    price = get_price(soup)
+    rating = get_rating(soup)
+    return [title, price, rating]
 
-    product = [product_name, product_price, product_rating]
-    print(product)
-    return product
+
+"""
+get_price(soup)
+Input: a soup object of the Amazon product page. 
+Output: a string containing the price of this product. 
+"""
+def get_price(soup):
+    try:
+        price = soup.find("span", attrs={'id':'priceblock_ourprice'}).string.strip()
+    except AttributeError:
+        price = ""  
+    return price
+
+"""
+get_rating(soup)
+Input: a soup object of the Amazon product page. 
+Output: a string containing the rating of this product. 
+"""
+def get_rating(soup):
+    try:
+        rating = soup.find("i", attrs={'class':'a-icon a-icon-star a-star-4-5'}).string.strip()
+    except AttributeError:
+        try:
+            rating = soup.find("span", attrs={'class':'a-icon-alt'}).string.strip()
+        except:
+            rating = ""
+    return rating
