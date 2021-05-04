@@ -6,5 +6,5 @@ In the desired place where you want to run our project, run these commands:
 ```
 git clone https://github.com/SorosWen/411project
 cd 411project
-pip 
+pip install -r requirements.txt
 ```
