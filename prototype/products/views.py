@@ -22,11 +22,16 @@ def search_product(request):
 
 ############################################################################
 ############################################################################
+# Amazon Scrapping Function #
 ############################################################################
 """
 amazon_getSearchResult(product_name)
-Input: the product name in string. 
-Output: a list of product information, each element is the info of a product. 
+Input: the name of a product. 
+Function: It take this product name and scrap information of all related products from Amazon. 
+Output: a list of product information, each element is the info of a product.
+    ex. [   [title1, price1, rating1], 
+            [title2, price2, rating2], 
+            [title3, price3, rating3]   ]
 """
 def amazon_getSearchResult(product_name):
     url = 'https://www.amazon.com/s?k=' + product_name.replace(' ', '+')
@@ -42,7 +47,7 @@ def amazon_getSearchResult(product_name):
 
 
 """
-amazon_product(url)
+amazon_product(url) # helper
 Input: the url of the Amazon product page. 
 Output: a list of information about this product. [title, price, rating]
 """
@@ -56,7 +61,7 @@ def amazon_product(url):
 
 
 """
-get_price(soup)
+get_price(soup) # helper
 Input: a soup object of the Amazon product page. 
 Output: a string containing the price of this product. 
 """
@@ -68,7 +73,7 @@ def get_price(soup):
     return price
 
 """
-get_rating(soup)
+get_rating(soup) # helper
 Input: a soup object of the Amazon product page. 
 Output: a string containing the rating of this product. 
 """
