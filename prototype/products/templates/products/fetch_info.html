@@ -1,72 +1,67 @@
 {% load static %}
 
 {% include 'products/messages.html' %}
+<body>
+<div class="split left" id="split-left">
+    <!--Login / Registration / Logout-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-<!--Login / Registration / Logout-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-    <!--Welcome-->
-    {% if user.is_authenticated %}
-     <h2>Welcome, {{user.username}}!</h2>
-    {% else %}
-    <h2>Welcome!</h2>
-    {% endif %}
-
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
+        <!--Welcome-->
         {% if user.is_authenticated %}
-        
-        <li class="nav-item">
-          <a class="nav-link" href="/products/logout">Logout</a>
-        </li>
- 
+         <h1>Welcome, {{user.username}}!</h1>
         {% else %}
-  
-        <li class="nav-item">
-          <a class="nav-link" href="/products/login">Login</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/products/register">Register</a>
-        </li>
-  
+        <h1>Welcome!</h1>
         {% endif %}
-      </ul>
-    </div>
-  </nav>
-  
 
-  <h1> Product Search Page </h1>
-  <head>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  </head>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
 
-<<<<<<< Updated upstream
-  <form action="/products/" method="POST" id="search_form">
-      {% csrf_token %}
-=======
-<form action="/products/" method="POST" id="search_form">
-    {% csrf_token %}
-    <label for="product_name">Please enter a product name: </label>
-    <input type="text" id = "product_name" name="product_name" required>
->>>>>>> Stashed changes
+            <li class="nav-item">
+              <a class="nav-link" href="/products/logout">Logout</a>
+            </li>
 
-      <label for="product_name">Please enter a product name </label>
-      <input type="text" id = "product_name" name="product_name" required>
+            {% else %}
 
-      <button type="submit" value="Submit">Search</button>
+            <li class="nav-item">
+              <a class="nav-link" href="/products/login">Login</a>
+            </li>
 
-  </form>
+              <h5>      </h5>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/products/register">Register</a>
+            </li>
+
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+
+      <h2> Product Search Page </h2>
+      <head>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+      </head>
+
+      <form action="/products/" method="POST" id="search_form">
+          {% csrf_token %}
+
+          <label for="product_name">Please enter a product name </label>
+          <input type="text" id = "product_name" name="product_name" required>
+
+          <button type="submit" value="Submit">Search</button>
+
+      </form>
 </div>
 
 {% if product_name %}
-<body>
-    <h1>Top 6 Search Results for {{ product_name }}</h1>
+<!--<body>-->
+<!--    <h3>Top 6 Search Results for {{ product_name }}</h3>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div id ='updateDiv'></div>
     <p id="demo"></p>
         <script>
-
         // change queryString to whatever search term the user enters
         var queryString = '{{ product_name }}'
         var googleSearchAPIKey = "{{ APIKeys.googleKey }}"
@@ -86,6 +81,10 @@
             '&type=search&amazon_domain=amazon.com&search_term=' + queryString + '&language=en_US&sort_by=featured'
 
         var left = document.getElementById("split-left");
+
+        let h3 = document.createElement('h3');
+        h3.textContent = 'Top 6 Search Results for {{ product_name }}:';
+        left.appendChild(h3);
 
         let leftcenter = document.createElement('div');
         leftcenter.className = 'centered';
@@ -198,9 +197,9 @@
 
 
                     // title + ratings
-                    let h3 = document.createElement('h4');
-                    h3.textContent = data.top_favourable.title;
-                    div.appendChild(h3);
+                    let h4 = document.createElement('h4');
+                    h4.textContent = data.top_favourable.title;
+                    div.appendChild(h4);
 
                     newParagraph = document.createElement('p');
                     newParagraph.textContent = data.top_favourable.body;

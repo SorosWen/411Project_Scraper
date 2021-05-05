@@ -5,9 +5,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import json
+from .forms import NewUserForm
 
 # Put your keys.json under the config_files folder
 # It should follow the structure of dummy.json
+
 json_data = open('configs/keys.json')
 
 data1 = json.load(json_data)  # deserialises it
@@ -110,7 +112,7 @@ def get_rating(soup):
 # Register an account
 def register_request(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -121,7 +123,7 @@ def register_request(request):
 
         return redirect("products:search")
 
-    form = UserCreationForm()
+    form = NewUserForm
     return render(request, "products/register.html", {"form": form})
 
 
