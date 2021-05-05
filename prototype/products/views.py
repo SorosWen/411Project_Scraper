@@ -7,8 +7,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 import json
 
-# enter local path for json containing secret keys
-# ex. C:/Users/David/Documents/GitHub/411project/prototype/secrets.json
+# Put your keys.json under the config_files folder
+# It should follow the structure of dummy.json
 json_data = open('configs/keys.json')
  
 data1 = json.load(json_data) # deserialises it
