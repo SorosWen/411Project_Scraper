@@ -53,15 +53,15 @@
     <div id ='updateDiv'></div>
     <p id="demo"></p>
         <script>
-
+        
         // change queryString to whatever search term the user enters
         var queryString = '{{ product_name }}'
-        var googleSearchAPIKey = '540a75178a80616c693cbade72c360e8'
+        var googleSearchAPIKey = "{{ APIKeys.googleKey }}"
 
-        var ebaySearchAPIKey = '59E8F264F6D84373B5FD933CA7CFDF5D'
+        var ebaySearchAPIKey = "{{ APIKeys.ebayKey }}"
         var ebayReviewID = ''
 
-        var amazonSearchAPIKey = '0C6E9C7C5918437BBD940542C02F9D53'
+        var amazonSearchAPIKey = "{{ APIKeys.amazonKey }}"
     
         var googleStaticURL = 'http://api.serpstack.com/search?access_key=' + googleSearchAPIKey + '&query='+
             queryString + ' price=google&location=newyork&google_domain=google.com'
@@ -226,7 +226,7 @@
         $(document).ready(function() {
             ebayResultandReviews();
         });
-
+        
         
         </script>
   

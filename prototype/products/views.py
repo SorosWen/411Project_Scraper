@@ -5,7 +5,15 @@ from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+import json
 
+# enter local path for json containing secret keys
+# ex. C:/Users/David/Documents/GitHub/411project/prototype/secrets.json
+json_data = open('')  
+ 
+data1 = json.load(json_data) # deserialises it
+data2 = json.dumps(data1) # json formatted string
+json_data.close()
 
 HEADERS = ({'User-Agent':
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
@@ -15,7 +23,7 @@ HEADERS = ({'User-Agent':
 def search_product(request):
     if request.method == 'POST':
         product_name = request.POST['product_name']
-        return render(request, 'products/fetch_info.html', {'product_name': product_name})
+        return render(request, 'products/fetch_info.html', {'product_name': product_name, 'APIKeys': data1})
     else:
         return render(request, 'products/fetch_info.html')
 
