@@ -2,48 +2,49 @@
 
 {% include 'products/messages.html' %}
 
-<!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        {% if user.is_authenticated %}
-        
-        <li class="nav-item">
-          <a class="nav-link" href="/products/logout">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Welcome, {{user.username}}</a>
-        </li>
-  
-        {% else %}
-  
-        <li class="nav-item">
-          <a class="nav-link" href="/products/login">Login</a>
-        </li>
-  
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-  
+<div class="split left" id="split left">
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          {% if user.is_authenticated %}
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/products/logout">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+          </li>
+    
+          {% else %}
+    
+          <li class="nav-item">
+            <a class="nav-link" href="/products/login">Login</a>
+          </li>
+    
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    
 
-<h1> Product Search Page </h1>
-<head>
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
-</head>
+  <h1> Product Search Page </h1>
+  <head>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  </head>
 
-<form action="/products/" method="POST">
-    {% csrf_token %}
-    <label for="product_name">Please enter a product name: </label>
-    <input type="text" id = "product_name" name="product_name" required>
+  <form action="/products/" method="POST">
+      {% csrf_token %}
+      <label for="product_name">Please enter a product name: </label>
+      <input type="text" id = "product_name" name="product_name" required>
 
-    <button type="submit" value="Submit">Search</button>
-</form>
-
+      <button type="submit" value="Submit">Search</button>
+  </form>
+</div>
 
 {% if product_name %} 
 <body>
@@ -59,6 +60,8 @@
 
         var ebaySearchAPIKey = '59E8F264F6D84373B5FD933CA7CFDF5D'
         var ebayReviewID = ''
+
+        var amazonSearchAPIKey = '0C6E9C7C5918437BBD940542C02F9D53'
     
         var googleStaticURL = 'http://api.serpstack.com/search?access_key=' + googleSearchAPIKey + '&query='+
             queryString + ' price=google&location=newyork&google_domain=google.com'
@@ -66,9 +69,10 @@
         var ebayStaticURL = 'https://api.countdownapi.com/request?api_key=' + ebaySearchAPIKey +
             '&type=search&ebay_domain=ebay.com&search_term=' + queryString + '&num=25'
 
-        let left = document.createElement('div');
-        left.className = 'split left';
-        document.body.appendChild(left);
+        var amazonStaticURL = 'https://api.rainforestapi.com/request?api_key=' + amazonSearchAPIKey + 
+            '&type=search&amazon_domain=amazon.com&search_term=' + queryString + '&language=en_US&sort_by=featured'
+
+        var left = document.getElementById("split left");
 
         let leftcenter = document.createElement('div');
         leftcenter.className = 'centered';
@@ -85,7 +89,7 @@
         
         // perform two consecutive API searches
         function ebayResultandReviews(){
-            
+            // google
             $.getJSON(googleStaticURL, function(data) {
             console.log(data);
             let div = document.createElement('div');
@@ -106,7 +110,36 @@
                 div.appendChild(newParagraph);
             }
         });
-        
+
+            //amazon
+            $.getJSON(amazonStaticURL, function(data) {
+                console.log(data);
+                
+                let div = document.createElement('div');
+                div.id = 'amazonResults';
+                leftcenter.appendChild(div);
+                let h4 = document.createElement('h4');
+                h4.textContent = 'What we found on Amazon:';
+                div.appendChild(h4);
+                
+                for (i = 0; i < 3; i++) {
+                    var k = i + 1;
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = k.toString() + ". " + data.search_results[i].title;
+                    div.appendChild(newParagraph);
+
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = "Price: " + data.search_results[i].price.raw;
+                    div.appendChild(newParagraph);
+
+                    newParagraph = document.createElement('p');
+                    newParagraph.textContent = data.search_results[i].link;
+                    div.appendChild(newParagraph);
+
+                }
+            });
+
+
             // get the ebay results first
             $.getJSON(ebayStaticURL, function(data) {
                 ebayReviewID = data.search_results[0].epid;
@@ -138,7 +171,7 @@
                 // wait till results and item id is back and do search on reviews
                 var ebayReviewURL = 'https://api.countdownapi.com/request?api_key=' + ebaySearchAPIKey + 
                 '&type=reviews&ebay_domain=ebay.com&epid=' + ebayReviewID + '&condition=all'
-            
+                
                 $.getJSON(ebayReviewURL, function(data) {
                     console.log(data);
                     let div = document.createElement('div');
