@@ -41,8 +41,15 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
 
+<<<<<<< Updated upstream
   <form action="/products/" method="POST" id="search_form">
       {% csrf_token %}
+=======
+<form action="/products/" method="POST" id="search_form">
+    {% csrf_token %}
+    <label for="product_name">Please enter a product name: </label>
+    <input type="text" id = "product_name" name="product_name" required>
+>>>>>>> Stashed changes
 
       <label for="product_name">Please enter a product name </label>
       <input type="text" id = "product_name" name="product_name" required>
