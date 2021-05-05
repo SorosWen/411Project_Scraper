@@ -9,12 +9,14 @@ import json
 
 # enter local path for json containing secret keys
 # ex. C:/Users/David/Documents/GitHub/411project/prototype/secrets.json
+"""
 json_data = open('')  
  
 data1 = json.load(json_data) # deserialises it
 data2 = json.dumps(data1) # json formatted string
 json_data.close()
-
+"""
+data1 = ''
 HEADERS = ({'User-Agent':
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
             'Accept-Language': 'en-US, en;q=0.5'})

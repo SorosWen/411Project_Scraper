@@ -2,47 +2,43 @@
 
 {% include 'products/messages.html' %}
 
-<div class="split left" id="split left">
+<div class="split left" id="split-left">
   <!--Navbar-->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
+
+     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           {% if user.is_authenticated %}
-          
+
           <li class="nav-item">
             <a class="nav-link" href="/products/logout">Logout</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Welcome, {{user.username}}</a>
           </li>
-    
+
           {% else %}
-    
+
           <li class="nav-item">
             <a class="nav-link" href="/products/login">Login</a>
           </li>
-    
+
           {% endif %}
         </ul>
       </div>
-    </nav>
-    
 
   <h1> Product Search Page </h1>
   <head>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
 
-  <form action="/products/" method="POST">
+  <form action="/products/" method="POST" id="search_form">
       {% csrf_token %}
-      <label for="product_name">Please enter a product name: </label>
+
+      <label for="product_name">Please enter a product name </label>
       <input type="text" id = "product_name" name="product_name" required>
 
       <button type="submit" value="Submit">Search</button>
+
   </form>
 </div>
 
