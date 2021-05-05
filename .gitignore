@@ -137,5 +137,11 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# MacOS stuff
+# MacOS folder info
 .DS_Store
+
+# Pycharm config
+.idea/
+
+# keys
+keys.json
