@@ -8,12 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm
 import json
 
 # Put your keys.json under the config_files folder
-# keys.json should have this structure:
-# {
-#     "googleKey": "",
-#     "ebayKey": "",
-#     "amazonKey": ""
-# }
+# It should follow the structure of dummy.json
 json_data = open('configs/keys.json')
 
 data1 = json.load(json_data) # deserialises it
