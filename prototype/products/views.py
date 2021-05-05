@@ -9,7 +9,7 @@ import json
 
 # enter local path for json containing secret keys
 # ex. C:/Users/David/Documents/GitHub/411project/prototype/secrets.json
-json_data = open('config_files/keys.json')
+json_data = open('configs/keys.json')
  
 data1 = json.load(json_data) # deserialises it
 data2 = json.dumps(data1) # json formatted string
