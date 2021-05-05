@@ -1,11 +1,18 @@
 {% block content %}      
 
 {% load crispy_forms_tags %}
-
+{% load socialaccount %}
+{% load static %}
 {% include 'products/messages.html' %}
 
 <!--Login--> 
 <div class="container py-5">
+  
+  <div class=" signin text-center">
+
+    <a href="{% provider_login_url 'google' %}" class="text-dark"><img src="{% static "btn_google_signin_light_normal_web@2x.png" %}" style="width:14rem; height:auto"></a>
+  </div>
+
   <h1>Login</h1>
   <form method="POST">
     {% csrf_token %}
@@ -13,6 +20,7 @@
     <button class="btn btn-primary" type="submit">Login</button>
   </form>
   <p class="text-center">Don't have an account? <a href="/products/register">Create an account</a>.</p>
+  <p class="text-center"><a href="/products/">Return Home</a>.</p>
 </div>
 
 {% endblock %}

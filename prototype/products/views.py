@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-
-
+from .forms import NewUserForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages 
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 def search_product(request):
     if request.method == 'POST':
@@ -46,33 +48,24 @@ def amazon_getInfo(url):
     return product
 
 
-
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login
-from django.contrib import messages #import messages
-
+# Register an account
 def register_request(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			messages.success(request, "Registration successful." )
-			return redirect("products:search")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm
-	return render (request=request, template_name="products/register.html", context={"register_form":form})
+  if request.method == "POST":
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      username = form.cleaned_data.get('username')
+      messages.success(request, f"New account created: {username}")
+      login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+    else:
+      messages.error(request,"Account creation failed")
 
+    return redirect("products:search")
 
+  form = UserCreationForm()
+  return render(request,"products/register.html", {"form": form})
 
-
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate #add this
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm #add this
-
+# Login to an account
 def login_request(request):
 	if request.method == "POST":
 		form = AuthenticationForm(request, data=request.POST)
@@ -91,16 +84,7 @@ def login_request(request):
 	form = AuthenticationForm()
 	return render(request=request, template_name="products/login.html", context={"login_form":form})
 
-
-
-
-
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate, logout #add this
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-
+# Logout of account
 def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
