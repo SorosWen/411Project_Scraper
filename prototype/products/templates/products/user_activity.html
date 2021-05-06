@@ -1,0 +1,29 @@
+<a href="/products/" class="button">Go Back</a>
+
+{% if user_activities %}
+<body>
+	<div class="title">
+		<h1> Your Activities: </h1>
+        </div>
+        
+        <div id="content">
+        <table>
+	<table border = "1" cellpadding = "5" cellspacing  = "5"> 
+		<td> <b> Time </b> </tb> 
+		<td> <b> Action </b>  </tb>
+        <td> <b> Searched Word </b>  </tb>
+		{% for activity in user_activities %}
+		<tr> 
+			<td>{{activity.0}}</td>
+            <td>{{activity.1}}</td>
+            <td>{{activity.2}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+        </div>
+</body>
+{% else %}
+    <h1> You don't have any activity on record. </h1>
+{% endif %}
+
+

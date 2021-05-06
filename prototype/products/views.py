@@ -114,7 +114,7 @@ def get_rating(soup):
 
 ############################################################################
 ############################################################################
-# Register user account # 
+# User account # 
 ############################################################################
 def register_request(request):
     if request.method == "POST":
@@ -159,3 +159,18 @@ def logout_request(request):
     messages.info(request, "You have successfully logged out.")
     return redirect("products:search")
 
+
+############################################################################
+############################################################################
+# User Activity # 
+############################################################################
+def user_activity(request):
+    if request.user.is_authenticated:
+        email = request.user.email
+        all_activities = UserActivity.objects.filter(email = email)
+        user_activities = []
+        for activities in all_activities:
+            user_activities.append(activities.get_info())
+        return render(request, 'products/user_activity.html', {'user_activities': user_activities})
+    else:
+        return render(request, 'products/user_activity.html')
