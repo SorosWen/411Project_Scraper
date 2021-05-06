@@ -42,4 +42,4 @@ NOT to use localhost
 
 
 ### Project Video
-The project video is in docs/. 
+The link to the project video: https://youtu.be/Ij9fArTmjE0
