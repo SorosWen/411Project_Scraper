@@ -145,3 +145,4 @@ cython_debug/
 
 # keys
 keys.json
+prototype/products/__pycache__/views.cpython-38.pyc
