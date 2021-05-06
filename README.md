@@ -10,6 +10,7 @@ cd 411project
 pip install -r requirements.txt
 ```
 
+###
 To let the API work, 
 create a file named keys.json 
 under the path: prototype/configs/
@@ -37,3 +38,8 @@ For example, http://127.0.0.1:8000/products
 
 Note: we encountered issues when using localhost as a synonym for 127.0.0.1, so we recommend
 NOT to use localhost
+
+
+
+### Project Video
+The project video is in docs/
