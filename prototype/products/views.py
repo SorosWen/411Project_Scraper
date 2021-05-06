@@ -6,6 +6,10 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import json
 from .forms import NewUserForm
+from django.db import models
+from datetime import date
+from .models import UserActivity
+from django.contrib.auth.models import User
 
 # Put your keys.json under the config_files folder
 # It should follow the structure of dummy.json
@@ -24,6 +28,12 @@ HEADERS = ({'User-Agent':
 def search_product(request):
     if request.method == 'POST':
         product_name = request.POST['product_name']
+        if request.user.is_authenticated:
+            email = request.user.email
+        else:
+            email = 'None'
+        new_activity = UserActivity(email = email, user_action = "Search", activity_date = date.today(), search_value = product_name)
+        new_activity.save()
         return render(request, 'products/fetch_info.html', {'product_name': product_name, 'APIKeys': data1})
     else:
         return render(request, 'products/fetch_info.html')
@@ -31,7 +41,8 @@ def search_product(request):
 
 ############################################################################
 ############################################################################
-# Amazon Scrapping Function #
+# Currently not used #
+# Amazon Scrapping Function # 
 ############################################################################
 """
 amazon_getSearchResult(product_name)
@@ -42,8 +53,6 @@ Output: a list of product information, each element is the info of a product.
 			[title2, price2, rating2], 
 			[title3, price3, rating3]   ]
 """
-
-
 def amazon_getSearchResult(product_name):
     url = 'https://www.amazon.com/s?k=' + product_name.replace(' ', '+')
     webpage = requests.get(url, headers=HEADERS)
@@ -60,13 +69,12 @@ def amazon_getSearchResult(product_name):
     return product_list
 
 
+
 """
 amazon_product(url) # helper
 Input: the url of the Amazon product page. 
 Output: a list of information about this product. [title, price, rating]
 """
-
-
 def amazon_product(url):
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")
@@ -75,14 +83,11 @@ def amazon_product(url):
     rating = get_rating(soup)
     return [title, price, rating]
 
-
 """
 get_price(soup) # helper
 Input: a soup object of the Amazon product page. 
 Output: a string containing the price of this product. 
 """
-
-
 def get_price(soup):
     try:
         price = soup.find("span", attrs={'id': 'priceblock_ourprice'}).string.strip()
@@ -96,8 +101,6 @@ get_rating(soup) # helper
 Input: a soup object of the Amazon product page. 
 Output: a string containing the rating of this product. 
 """
-
-
 def get_rating(soup):
     try:
         rating = soup.find("i", attrs={'class': 'a-icon a-icon-star a-star-4-5'}).string.strip()
@@ -109,7 +112,10 @@ def get_rating(soup):
     return rating
 
 
-# Register an account
+############################################################################
+############################################################################
+# Register user account # 
+############################################################################
 def register_request(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -152,3 +158,4 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("products:search")
+

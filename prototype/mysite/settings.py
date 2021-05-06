@@ -155,3 +155,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "prototype\\products\\static"
 ]
+
+
+
