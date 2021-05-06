@@ -10,6 +10,19 @@ cd 411project
 pip install -r requirements.txt
 ```
 
+To let the API work, 
+create a file named keys.json 
+under the path: prototype/configs/
+In the file, copy the following code: (if the file doesn't exist under this path yet)
+```
+{
+    "googleKey": "a1e40b3f204f9896d55206cd1f3fd273",
+    "ebayKey": "E09581872ED647DFA5BCF7A1E9B35EF9",
+    "amazonKey": "0C6E9C7C5918437BBD940542C02F9D53"
+}
+```
+
+
 ### Run the server
 ```
 cd prototype
