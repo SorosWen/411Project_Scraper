@@ -42,4 +42,4 @@ NOT to use localhost
 
 
 ### Project Video
-The project video is in docs/
+The project video is in docs/. 
