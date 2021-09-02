@@ -1,5 +1,8 @@
 # 411 Project
 
+## Project Description:
+This is a Amazon/eBay product scrapper created for CS411. The scrapping functionality of the project is primarily done through APIs. 
+
 ## How to run
 ### Install dependencies
 You need suffiently updated python3 and pip to run this project.
